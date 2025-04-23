@@ -8,7 +8,6 @@ import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
 import * as crypto from "crypto";
 import { PermissionRepository } from "@/database/repository/permission.repository";
-import { PermissionType } from "@/auth/helpers/permission-type.enum";
 import { UserRepository } from "@/database/repository/user.repository";
 import { RedisService } from "@/redis/redis.service";
 import { JwtPayload } from "@/auth/interfaces/jwt-payload.interface";
@@ -20,6 +19,7 @@ import { TokensReturnDto } from "@/packages/auth/dto/tokens-return.dto";
 import { LoginReturnDto } from "@/packages/auth/dto/login-return.dto";
 import { UserEntity } from "@/database/entity/user.entity";
 import { Optional } from "@/helpers/optional";
+import { permissionType } from "@/helpers/constants";
 
 @Injectable()
 export class AuthService {
@@ -137,7 +137,7 @@ export class AuthService {
 
     user = await this.userRepository.save(user);
     const permissions = await this.permissionRepository.findByNames([
-      PermissionType.READ_POSTS,
+      permissionType.readPosts,
     ]);
     user.permissions = permissions;
 

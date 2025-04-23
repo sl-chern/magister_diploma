@@ -13,7 +13,6 @@ import {
 import { JwtAuthGuard } from "@/auth/guards/jwt-auth.guard";
 import { HasPermissionsGuard } from "@/auth/guards/has-permission.guard";
 import { HasPermissions } from "@/auth/decorators/has-permissions.decorator";
-import { PermissionType } from "@/auth/helpers/permission-type.enum";
 import { AuthService } from "@/packages/auth/auth.service";
 import { UserService } from "../user/user.service";
 import { LoginDto } from "@/packages/auth/dto/login.dto";
@@ -23,7 +22,7 @@ import { REFRESH_TOKEN_TTL } from "src/auth/helpers/auth.constants";
 import { jwtExpToMilliseconds } from "@/helpers/jwtExpToMilliseconds";
 import jwtConfig from "src/config/jwt.config";
 import { ConfigType } from "@nestjs/config";
-import { cookiesNames } from "@/helpers/constants";
+import { cookiesNames, permissionType } from "@/helpers/constants";
 import { JwtPayload } from "src/auth/interfaces/jwt-payload.interface";
 import { ReqUser } from "@/auth/decorators/req-user.decorator";
 import { UserPrincipal } from "src/auth/interfaces/user-principal.interface";
@@ -116,7 +115,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard, HasPermissionsGuard)
-  @HasPermissions(PermissionType.READ_POSTS)
+  @HasPermissions(permissionType.readPosts)
   @Get(":email")
   async getUserByEmail(@Param("email") email: string) {
     return this.userService.findByEmail(email);

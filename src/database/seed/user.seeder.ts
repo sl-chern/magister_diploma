@@ -2,6 +2,7 @@ import { Seeder, SeederFactoryManager } from "typeorm-extension";
 import { DataSource } from "typeorm";
 import { UserEntity } from "../entity/user.entity";
 import { RoleEntity } from "../entity/role.entity";
+import { PermissionEntity } from "../entity/permission.entity";
 
 export default class UserSeeder implements Seeder {
   public async run(
@@ -18,6 +19,9 @@ export default class UserSeeder implements Seeder {
     const userFactory = factoryManager.get(UserEntity);
 
     const roleRepository = dataSource.getRepository(RoleEntity);
+    const permissionRepository = dataSource.getRepository(PermissionEntity);
+
+    const permissions = await permissionRepository.find();
 
     await userFactory.save({
       role: await roleRepository.findOneOrFail({
@@ -25,6 +29,7 @@ export default class UserSeeder implements Seeder {
           name: "admin",
         },
       }),
+      permissions: permissions,
     });
 
     await userFactory.saveMany(100, {
@@ -33,6 +38,7 @@ export default class UserSeeder implements Seeder {
           name: "user",
         },
       }),
+      permissions: permissions,
     });
   }
 }

@@ -1,4 +1,4 @@
-import { PermissionType } from "../helpers/permission-type.enum";
+import { PermissionType } from "@/helpers/constants";
 
 export interface UserPrincipal {
   id?: string;

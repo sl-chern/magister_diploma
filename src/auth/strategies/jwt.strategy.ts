@@ -3,7 +3,6 @@ import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { JwtPayload } from "../interfaces/jwt-payload.interface";
 import { UserPrincipal } from "../interfaces/user-principal.interface";
-import { PermissionType } from "../helpers/permission-type.enum";
 import jwtConfig from "../../config/jwt.config";
 import { ConfigType } from "@nestjs/config";
 import { Request } from "express";
@@ -28,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
       id: payload.id,
       email: payload.email,
       name: payload.name,
-      permissions: payload.permissions as PermissionType[] | undefined,
+      permissions: payload.permissions,
     };
   }
 }
