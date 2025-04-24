@@ -1,4 +1,4 @@
-import { UserService } from "@/packages/user/user.service";
+import { UserService } from "src/packages/user/user.service";
 import { Controller, Get, Param, Query } from "@nestjs/common";
 
 @Controller("user")

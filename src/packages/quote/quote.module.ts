@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
-import { QuoteRepository } from "@/database/repository/quote.repository";
-import { QuoteController } from "@/packages/quote/quote.controller";
-import { QuoteService } from "@/packages/quote/quote.service";
-import { UserRepository } from "@/database/repository/user.repository";
-import { TagRepository } from "@/database/repository/tag.repository";
-import { RepostRepository } from "@/database/repository/repost.repository";
+import { QuoteRepository } from "src/database/repository/quote.repository";
+import { QuoteController } from "src/packages/quote/quote.controller";
+import { QuoteService } from "src/packages/quote/quote.service";
+import { UserRepository } from "src/database/repository/user.repository";
+import { TagRepository } from "src/database/repository/tag.repository";
+import { RepostRepository } from "src/database/repository/repost.repository";
 
 @Module({
   providers: [

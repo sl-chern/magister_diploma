@@ -6,7 +6,7 @@ import {
 import { ExecutionContextHost } from "@nestjs/core/helpers/execution-context-host";
 import { AuthGuard } from "@nestjs/passport";
 import { Observable } from "rxjs";
-import { AuthenticatedRequest } from "@/auth/interfaces/authenticated-request.interface";
+import { AuthenticatedRequest } from "src/auth/interfaces/authenticated-request.interface";
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard("jwt") {

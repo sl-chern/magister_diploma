@@ -7,10 +7,10 @@ import {
   Put,
   Delete,
 } from "@nestjs/common";
-import { NotificationService } from "@/packages/notification/notification.service";
-import { NotificationEntity } from "@/database/entity/notification.entity";
-import { ReqUser } from "@/auth/decorators/req-user.decorator";
-import { UserPrincipal } from "@/auth/interfaces/user-principal.interface";
+import { NotificationService } from "src/packages/notification/notification.service";
+import { NotificationEntity } from "src/database/entity/notification.entity";
+import { ReqUser } from "src/auth/decorators/req-user.decorator";
+import { UserPrincipal } from "src/auth/interfaces/user-principal.interface";
 
 @Controller("notifications")
 export class NotificationController {

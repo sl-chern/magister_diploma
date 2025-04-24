@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { UserRepository } from "@/database/repository/user.repository";
+import { UserRepository } from "src/database/repository/user.repository";
 import { ILike } from "typeorm";
 
 @Injectable()

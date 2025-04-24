@@ -10,21 +10,21 @@ import {
   Res,
   UseGuards,
 } from "@nestjs/common";
-import { JwtAuthGuard } from "@/auth/guards/jwt-auth.guard";
-import { HasPermissionsGuard } from "@/auth/guards/has-permission.guard";
-import { HasPermissions } from "@/auth/decorators/has-permissions.decorator";
-import { AuthService } from "@/packages/auth/auth.service";
-import { UserService } from "../user/user.service";
-import { LoginDto } from "@/packages/auth/dto/login.dto";
-import { RegistrationDto } from "@/packages/auth/dto/registration.dto";
+import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
+import { HasPermissionsGuard } from "src/auth/guards/has-permission.guard";
+import { HasPermissions } from "src/auth/decorators/has-permissions.decorator";
+import { AuthService } from "src/packages/auth/auth.service";
+import { UserService } from "src/packages/user/user.service";
+import { LoginDto } from "src/packages/auth/dto/login.dto";
+import { RegistrationDto } from "src/packages/auth/dto/registration.dto";
 import { Request, Response } from "express";
 import { REFRESH_TOKEN_TTL } from "src/auth/helpers/auth.constants";
-import { jwtExpToMilliseconds } from "@/helpers/jwtExpToMilliseconds";
+import { jwtExpToMilliseconds } from "src/helpers/jwtExpToMilliseconds";
 import jwtConfig from "src/config/jwt.config";
 import { ConfigType } from "@nestjs/config";
-import { cookiesNames, permissionType } from "@/helpers/constants";
+import { cookiesNames, permissionType } from "src/helpers/constants";
 import { JwtPayload } from "src/auth/interfaces/jwt-payload.interface";
-import { ReqUser } from "@/auth/decorators/req-user.decorator";
+import { ReqUser } from "src/auth/decorators/req-user.decorator";
 import { UserPrincipal } from "src/auth/interfaces/user-principal.interface";
 
 @Controller("auth")

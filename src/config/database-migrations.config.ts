@@ -25,10 +25,12 @@ options = Object.assign(options, {
   migrationsRun: true,
   migrationsTableName: "migrations_typeorm",
   migrations: ["src/database/migrations/*{.ts,.js}"],
-  seed: ["src/database/seed/*{.ts,.js}"],
-  factories: ["src/database/factories/**/*.js"],
+  seeds: ["src/database/seed/*{.ts,.js}"],
+  factories: ["src/database/factory/*{.ts,.js}"],
   logging: true,
 });
+
+console.log(options);
 
 const connectionSource = new DataSource(
   options as DataSourceOptions & SeederOptions,

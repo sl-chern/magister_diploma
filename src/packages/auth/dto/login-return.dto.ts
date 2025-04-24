@@ -1,4 +1,4 @@
-import { UserEntity } from "@/database/entity/user.entity";
+import { UserEntity } from "src/database/entity/user.entity";
 
 export class LoginReturnDto {
   accessToken: string;

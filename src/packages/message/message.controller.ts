@@ -8,8 +8,8 @@ import {
   Delete,
   Query,
 } from "@nestjs/common";
-import { MessageService } from "@/packages/message/message.service";
-import { MessageEntity } from "@/database/entity/message.entity";
+import { MessageService } from "src/packages/message/message.service";
+import { MessageEntity } from "src/database/entity/message.entity";
 
 @Controller("messages")
 export class MessageController {

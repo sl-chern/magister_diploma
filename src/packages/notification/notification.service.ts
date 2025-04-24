@@ -1,5 +1,5 @@
-import { NotificationEntity } from "@/database/entity/notification.entity";
-import { NotificationRepository } from "@/database/repository/notification.repository";
+import { NotificationEntity } from "src/database/entity/notification.entity";
+import { NotificationRepository } from "src/database/repository/notification.repository";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()

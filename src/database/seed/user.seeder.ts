@@ -9,8 +9,8 @@ export default class UserSeeder implements Seeder {
     dataSource: DataSource,
     factoryManager: SeederFactoryManager,
   ): Promise<void> {
-    await dataSource.query('TRUNCATE "user" RESTART IDENTITY;');
-    await dataSource.query('TRUNCATE "role" RESTART IDENTITY;');
+    await dataSource.query('TRUNCATE "user" RESTART IDENTITY CASCADE;');
+    await dataSource.query('TRUNCATE "role" RESTART IDENTITY CASCADE;');
 
     const repository = dataSource.getRepository(RoleEntity);
     await repository.insert({ name: "user" });

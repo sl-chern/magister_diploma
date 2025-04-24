@@ -19,7 +19,7 @@
     "migration:create": "cross-var npm run typeorm -- migration:create ./src/database/migrations/$npm_config_migration_name",
     "migration:revert": "npm run development typeorm -- -d ./src/config/database-migrations.config.ts migration:revert",
     "development": "dotenv-run-script .env.dev --",
-    "seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -d ./src/config/database-migrations.config.ts",
+    "seed": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./src/config/database-migrations.config.ts",
     "start:docker": "docker compose --env-file ./.env.dev up -d",
     "stop:docker": "docker compose --env-file ./.env.dev down"
   },

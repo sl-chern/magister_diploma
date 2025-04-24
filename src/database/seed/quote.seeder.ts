@@ -4,13 +4,13 @@ import { UserEntity } from "../entity/user.entity";
 import { QuoteEntity } from "../entity/quote.entity";
 import { TagEntity } from "../entity/tag.entity";
 
-export default class UserSeeder implements Seeder {
+export default class QuoteSeeder implements Seeder {
   public async run(
     dataSource: DataSource,
     factoryManager: SeederFactoryManager,
   ): Promise<void> {
-    await dataSource.query('TRUNCATE "quote" RESTART IDENTITY;');
-    await dataSource.query('TRUNCATE "tag" RESTART IDENTITY;');
+    await dataSource.query('TRUNCATE "quote" RESTART IDENTITY CASCADE;');
+    await dataSource.query('TRUNCATE "tag" RESTART IDENTITY CASCADE;');
 
     const userRepository = dataSource.getRepository(UserEntity);
 

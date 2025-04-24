@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToMany } from "typeorm";
 import { UserEntity } from "./user.entity";
 
-@Entity({ name: "permissions" })
+@Entity({ name: "permission" })
 export class PermissionEntity {
   @PrimaryGeneratedColumn("uuid", {
     name: "id",

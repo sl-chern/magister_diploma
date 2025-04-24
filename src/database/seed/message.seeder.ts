@@ -8,7 +8,7 @@ export default class MessageSeeder implements Seeder {
     dataSource: DataSource,
     factoryManager: SeederFactoryManager,
   ): Promise<void> {
-    await dataSource.query('TRUNCATE "message" RESTART IDENTITY;');
+    await dataSource.query('TRUNCATE "message" RESTART IDENTITY CASCADE;');
 
     const userRepository = dataSource.getRepository(UserEntity);
 

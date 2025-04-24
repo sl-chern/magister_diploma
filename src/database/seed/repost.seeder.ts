@@ -5,7 +5,7 @@ import { RepostEntity } from "../entity/repost.entity";
 
 export default class RepostSeeder implements Seeder {
   public async run(dataSource: DataSource): Promise<void> {
-    await dataSource.query('TRUNCATE "repost" RESTART IDENTITY;');
+    await dataSource.query('TRUNCATE "repost" RESTART IDENTITY CASCADE;');
 
     const repostRepository = dataSource.getRepository(RepostEntity);
     const quoteRepository = dataSource.getRepository(QuoteEntity);

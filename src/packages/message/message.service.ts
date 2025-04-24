@@ -1,7 +1,7 @@
-import { MessageEntity } from "@/database/entity/message.entity";
-import { MessageRepository } from "@/database/repository/message.repository";
+import { MessageEntity } from "src/database/entity/message.entity";
+import { MessageRepository } from "src/database/repository/message.repository";
 import { Injectable } from "@nestjs/common";
-import { GetAllMessagesDto } from "@/packages/message/dto/get-all-messages.dto";
+import { GetAllMessagesDto } from "src/packages/message/dto/get-all-messages.dto";
 
 @Injectable()
 export class MessageService {

@@ -7,19 +7,19 @@ import {
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
 import * as crypto from "crypto";
-import { PermissionRepository } from "@/database/repository/permission.repository";
-import { UserRepository } from "@/database/repository/user.repository";
-import { RedisService } from "@/redis/redis.service";
-import { JwtPayload } from "@/auth/interfaces/jwt-payload.interface";
-import { REFRESH_TOKEN_TTL } from "@/auth/helpers/auth.constants";
-import { RefreshDto } from "@/packages/auth/dto/refresh.dto";
-import { LoginDto } from "@/packages/auth/dto/login.dto";
-import { RegistrationDto } from "@/packages/auth/dto/registration.dto";
-import { TokensReturnDto } from "@/packages/auth/dto/tokens-return.dto";
-import { LoginReturnDto } from "@/packages/auth/dto/login-return.dto";
-import { UserEntity } from "@/database/entity/user.entity";
-import { Optional } from "@/helpers/optional";
-import { permissionType } from "@/helpers/constants";
+import { PermissionRepository } from "src/database/repository/permission.repository";
+import { UserRepository } from "src/database/repository/user.repository";
+import { RedisService } from "src/redis/redis.service";
+import { JwtPayload } from "src/auth/interfaces/jwt-payload.interface";
+import { REFRESH_TOKEN_TTL } from "src/auth/helpers/auth.constants";
+import { RefreshDto } from "src/packages/auth/dto/refresh.dto";
+import { LoginDto } from "src/packages/auth/dto/login.dto";
+import { RegistrationDto } from "src/packages/auth/dto/registration.dto";
+import { TokensReturnDto } from "src/packages/auth/dto/tokens-return.dto";
+import { LoginReturnDto } from "src/packages/auth/dto/login-return.dto";
+import { UserEntity } from "src/database/entity/user.entity";
+import { Optional } from "src/helpers/optional";
+import { permissionType } from "src/helpers/constants";
 
 @Injectable()
 export class AuthService {

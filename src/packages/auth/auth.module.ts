@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
-import { AuthService } from "@/packages/auth/auth.service";
-import { RedisModule } from "@/redis/redis.module";
+import { AuthService } from "src/packages/auth/auth.service";
+import { RedisModule } from "src/redis/redis.module";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigType } from "@nestjs/config";
-import jwtConfig from "@/config/jwt.config";
-import { AuthController } from "@/packages/auth/auth.controller";
-import { PermissionRepository } from "@/database/repository/permission.repository";
-import { UserRepository } from "@/database/repository/user.repository";
-import { UserModule } from "../user/user.module";
+import jwtConfig from "src/config/jwt.config";
+import { AuthController } from "src/packages/auth/auth.controller";
+import { PermissionRepository } from "src/database/repository/permission.repository";
+import { UserRepository } from "src/database/repository/user.repository";
+import { UserModule } from "src/packages/user/user.module";
 
 @Module({
   providers: [AuthService, PermissionRepository, UserRepository],

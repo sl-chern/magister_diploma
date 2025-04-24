@@ -7,7 +7,7 @@ services:
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
     volumes:
-      - ./backend/src:/app/src
+      - ./src:/app/src
     depends_on:
       - db
       - redis

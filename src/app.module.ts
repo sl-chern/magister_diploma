@@ -1,15 +1,15 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigType } from "@nestjs/config";
 import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
-import dbConfig from "@/config/database.config";
-import { DatabaseModule } from "@/database/database.module";
-import { AuthModule } from "@/auth/auth.module";
-import { RedisModule } from "@/redis/redis.module";
-import { AuthModule as AuthModuleCrud } from "@/packages/auth/auth.module";
-import { QuoteModule } from "@/packages/quote/quote.module";
-import { UserModule } from "@/packages/user/user.module";
-import { MessageModule } from "@/packages/message/message.module";
-import { NotificationModule } from "@/packages/notification/notification.module";
+import dbConfig from "src/config/database.config";
+import { DatabaseModule } from "src/database/database.module";
+import { AuthModule } from "src/auth/auth.module";
+import { RedisModule } from "src/redis/redis.module";
+import { AuthModule as AuthModuleCrud } from "src/packages/auth/auth.module";
+import { QuoteModule } from "src/packages/quote/quote.module";
+import { UserModule } from "src/packages/user/user.module";
+import { MessageModule } from "src/packages/message/message.module";
+import { NotificationModule } from "src/packages/notification/notification.module";
 
 @Module({
   imports: [

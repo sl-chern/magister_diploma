@@ -1,12 +1,12 @@
-import { QuoteRepository } from "@/database/repository/quote.repository";
+import { QuoteRepository } from "src/database/repository/quote.repository";
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { GetQuotesDto } from "@/packages/quote/dto/get-quotes.dto";
-import { CreateQuoteDto } from "@/packages/quote/dto/create-quote.dto";
-import { UserPrincipal } from "@/auth/interfaces/user-principal.interface";
-import { UserRepository } from "@/database/repository/user.repository";
-import { TagRepository } from "@/database/repository/tag.repository";
+import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
+import { CreateQuoteDto } from "src/packages/quote/dto/create-quote.dto";
+import { UserPrincipal } from "src/auth/interfaces/user-principal.interface";
+import { UserRepository } from "src/database/repository/user.repository";
+import { TagRepository } from "src/database/repository/tag.repository";
 import { In } from "typeorm";
-import { RepostRepository } from "@/database/repository/repost.repository";
+import { RepostRepository } from "src/database/repository/repost.repository";
 
 @Injectable()
 export class QuoteService {

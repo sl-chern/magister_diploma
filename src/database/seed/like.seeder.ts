@@ -4,9 +4,9 @@ import { UserEntity } from "../entity/user.entity";
 import { QuoteEntity } from "../entity/quote.entity";
 import { LikeEntity } from "../entity/like.entity";
 
-export default class UserSeeder implements Seeder {
+export default class LikeSeeder implements Seeder {
   public async run(dataSource: DataSource): Promise<void> {
-    await dataSource.query('TRUNCATE "like" RESTART IDENTITY;');
+    await dataSource.query('TRUNCATE "like" RESTART IDENTITY CASCADE;');
 
     const likeRepository = dataSource.getRepository(LikeEntity);
     const userRepository = dataSource.getRepository(UserEntity);
