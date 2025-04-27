@@ -2,15 +2,18 @@ services:
   backend:
     build:
       dockerfile: ./Dockerfile.dev
-    container_name: backend
     env_file: ./.env.dev
-    ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}
     volumes:
       - ./src:/app/src
+    environment:
+      - PORT=${BACKEND_PORT}
     depends_on:
       - db
       - redis
+    deploy:
+      replicas: 2
+    networks:
+      - loadbalancing
 
   db:
     image: postgres:latest
@@ -27,6 +30,8 @@ services:
     ports:
       - ${DB_PORT}:${DB_PORT}
     command: -p ${DB_PORT}
+    networks:
+      - loadbalancing
 
   redis:
     image: redis:latest
@@ -34,4 +39,19 @@ services:
       - ${REDIS_PORT}:${REDIS_PORT}
     env_file: ./.env.dev
     command: redis-server --requirepass ${REDIS_PASS} --port ${REDIS_PORT}
-  
+    networks:
+      - loadbalancing
+
+  nginx:
+    build:
+      dockerfile: ./Dockerfile.nginx.dev
+    container_name: nginx
+    ports:
+      - "80:80"
+    networks:
+      - loadbalancing
+    depends_on:
+      - backend
+
+networks:
+  loadbalancing:
