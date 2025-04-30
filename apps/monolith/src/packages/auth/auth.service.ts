@@ -2,7 +2,6 @@ import {
   BadRequestException,
   ForbiddenException,
   Injectable,
-  Logger,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
@@ -29,8 +28,6 @@ export class AuthService {
     private readonly permissionRepository: PermissionRepository,
     private readonly redisService: RedisService,
   ) {}
-
-  private readonly logger = new Logger(AuthService.name);
 
   async getTokens(payload: JwtPayload): Promise<TokensReturnDto> {
     const accessToken = await this.jwtService.signAsync(payload);
