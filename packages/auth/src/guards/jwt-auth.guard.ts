@@ -6,12 +6,12 @@ import {
 import { ExecutionContextHost } from "@nestjs/core/helpers/execution-context-host";
 import { AuthGuard } from "@nestjs/passport";
 import { Observable } from "rxjs";
-import { AuthenticatedRequest } from "src/auth/interfaces/authenticated-request.interface";
+import { AuthenticatedRequest } from "../interfaces/authenticated-request.interface";
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard("jwt") {
   canActivate(
-    context: ExecutionContext,
+    context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest<AuthenticatedRequest>();
     return super.canActivate(new ExecutionContextHost([req]));

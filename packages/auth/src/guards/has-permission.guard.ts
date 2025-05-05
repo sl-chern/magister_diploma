@@ -3,18 +3,18 @@ import { Reflector } from "@nestjs/core";
 import { Observable } from "rxjs";
 import { AuthenticatedRequest } from "../interfaces/authenticated-request.interface";
 import { HAS_PERMISSIONS_KEY } from "../helpers/auth.constants";
-import { PermissionType } from "src/helpers/constants";
+import { PermissionType } from "@repo/utilities/src/constants/constants";
 
 @Injectable()
 export class HasPermissionsGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   canActivate(
-    context: ExecutionContext,
+    context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
     const routePermissions = this.reflector.get<PermissionType[]>(
       HAS_PERMISSIONS_KEY,
-      context.getHandler(),
+      context.getHandler()
     );
 
     if (!routePermissions || routePermissions.length == 0) {

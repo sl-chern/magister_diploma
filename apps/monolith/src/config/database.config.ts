@@ -1,5 +1,5 @@
 import { registerAs } from "@nestjs/config";
-import { DatabaseConfig } from "src/types/DatabaseConfig";
+import { DatabaseConfig } from "@repo/utilities/src/interfaces/DatabaseConfig";
 
 const folder = process.env.NODE_ENV ? "src" : "dist";
 

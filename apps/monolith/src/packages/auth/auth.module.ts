@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { AuthService } from "src/packages/auth/auth.service";
-import { RedisModule } from "src/redis/redis.module";
+import { RedisModule } from "@repo/redis/src/redis.module";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigType } from "@nestjs/config";
 import jwtConfig from "src/config/jwt.config";

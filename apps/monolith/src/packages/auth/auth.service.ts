@@ -8,17 +8,17 @@ import * as bcrypt from "bcryptjs";
 import * as crypto from "crypto";
 import { PermissionRepository } from "src/database/repository/permission.repository";
 import { UserRepository } from "src/database/repository/user.repository";
-import { RedisService } from "src/redis/redis.service";
-import { JwtPayload } from "src/auth/interfaces/jwt-payload.interface";
-import { REFRESH_TOKEN_TTL } from "src/auth/helpers/auth.constants";
+import { RedisService } from "@repo/redis/src/redis.service";
+import { JwtPayload } from "@repo/auth/src/interfaces/jwt-payload.interface";
+import { REFRESH_TOKEN_TTL } from "@repo/auth/src/helpers/auth.constants";
 import { RefreshDto } from "src/packages/auth/dto/refresh.dto";
 import { LoginDto } from "src/packages/auth/dto/login.dto";
 import { RegistrationDto } from "src/packages/auth/dto/registration.dto";
 import { TokensReturnDto } from "src/packages/auth/dto/tokens-return.dto";
 import { LoginReturnDto } from "src/packages/auth/dto/login-return.dto";
 import { UserEntity } from "src/database/entity/user.entity";
-import { Optional } from "src/helpers/optional";
-import { permissionType } from "src/helpers/constants";
+import { Optional } from "@repo/utilities/src/types/optional";
+import { permissionType } from "@repo/utilities/src/constants/constants";
 
 @Injectable()
 export class AuthService {

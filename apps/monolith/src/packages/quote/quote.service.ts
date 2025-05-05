@@ -2,7 +2,7 @@ import { QuoteRepository } from "src/database/repository/quote.repository";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
 import { CreateQuoteDto } from "src/packages/quote/dto/create-quote.dto";
-import { UserPrincipal } from "src/auth/interfaces/user-principal.interface";
+import { UserPrincipal } from "@repo/auth/src/interfaces/user-principal.interface";
 import { UserRepository } from "src/database/repository/user.repository";
 import { TagRepository } from "src/database/repository/tag.repository";
 import { In } from "typeorm";

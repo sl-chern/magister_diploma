@@ -9,8 +9,8 @@ import {
 } from "@nestjs/common";
 import { NotificationService } from "src/packages/notification/notification.service";
 import { NotificationEntity } from "src/database/entity/notification.entity";
-import { ReqUser } from "src/auth/decorators/req-user.decorator";
-import { UserPrincipal } from "src/auth/interfaces/user-principal.interface";
+import { ReqUser } from "@repo/auth/src/decorators/req-user.decorator";
+import { UserPrincipal } from "@repo/auth/src/interfaces/user-principal.interface";
 
 @Controller("notifications")
 export class NotificationController {

@@ -1,21 +1,20 @@
 {
-  "name": "@repo/database",
+  "name": "@repo/auth",
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc"
-  },
-  "exports": {
-    "./entity": {
-      "types": "./src/entity/*.ts",
-      "default": "./dist/entity/*.js"
-    }
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
     "typescript": "latest"
   },
   "dependencies": {
-    "typeorm": "^0.3.20"
+    "@repo/utilities": "*",
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/passport": "^11.0.5",
+    "passport-jwt": "^4.0.1",
+    "rxjs": "^7.8.1"
   }
 }

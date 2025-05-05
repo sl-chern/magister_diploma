@@ -1,0 +1,27 @@
+{
+  "name": "@repo/redis",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    "./redis.module": {
+      "types": "./src/redis.module.ts",
+      "default": "./dist/redis.module.js"
+    },
+    "./redis.service": {
+      "types": "./src/redis.service.ts",
+      "default": "./dist/redis.service.js"
+    }
+  },
+  "dependencies": {
+    "@nestjs/cache-manager": "^3.0.0",
+    "@nestjs/common": "^11.0.1",
+    "cache-manager-redis-yet": "^5.1.5"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "typescript": "latest"
+  }
+}

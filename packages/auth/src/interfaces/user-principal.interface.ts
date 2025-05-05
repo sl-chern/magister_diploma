@@ -1,4 +1,4 @@
-import { PermissionType } from "src/helpers/constants";
+import { PermissionType } from "@repo/utilities/src/constants/constants";
 
 export interface UserPrincipal {
   id?: string;

@@ -1,5 +1,5 @@
 import { registerAs } from "@nestjs/config";
-import { JwtConfig } from "src/types/JwtConfig";
+import { JwtConfig } from "@repo/utilities/src/interfaces/JwtConfig"
 
 export default registerAs(
   "jwt",
