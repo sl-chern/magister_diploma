@@ -1,10 +1,11 @@
 services:
   backend:
     build:
-      dockerfile: ./Dockerfile.dev
+      context: ../../
+      dockerfile: apps/monolith/Dockerfile.dev
     env_file: ./.env.dev
     volumes:
-      - ./src:/app/src
+      - ./src:/app/apps/monolith/src
     environment:
       - PORT=${BACKEND_PORT}
     depends_on:
@@ -43,9 +44,10 @@ services:
       - loadbalancing
 
   nginx:
-    build:
-      dockerfile: ./Dockerfile.nginx.dev
+    image: nginx:latest
     container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "80:80"
     networks:

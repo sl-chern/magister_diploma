@@ -10,25 +10,27 @@ import {
   Res,
   UseGuards,
 } from "@nestjs/common";
-import { JwtAuthGuard } from "@repo/auth/src/guards/jwt-auth.guard";
-import { HasPermissionsGuard } from "@repo/auth/src/guards/has-permission.guard";
-import { HasPermissions } from "@repo/auth/src/decorators/has-permissions.decorator";
 import { AuthService } from "src/packages/auth/auth.service";
 import { UserService } from "src/packages/user/user.service";
 import { LoginDto } from "src/packages/auth/dto/login.dto";
 import { RegistrationDto } from "src/packages/auth/dto/registration.dto";
-import { Request, Response } from "express";
-import { REFRESH_TOKEN_TTL } from "@repo/auth/src/helpers/auth.constants";
-import { jwtExpToMilliseconds } from "@repo/utilities/src/helpers/jwtExpToMilliseconds";
+import { type Request, type Response } from "express";
 import jwtConfig from "src/config/jwt.config";
-import { ConfigType } from "@nestjs/config";
+import { type ConfigType } from "@nestjs/config";
 import {
   cookiesNames,
   permissionType,
-} from "@repo/utilities/src/constants/constants";
-import { JwtPayload } from "@repo/auth/src/interfaces/jwt-payload.interface";
-import { ReqUser } from "@repo/auth/src/decorators/req-user.decorator";
-import { UserPrincipal } from "@repo/auth/src/interfaces/user-principal.interface";
+  jwtExpToMilliseconds,
+} from "@repo/utilities";
+import {
+  type UserPrincipal,
+  ReqUser,
+  JwtPayload,
+  REFRESH_TOKEN_TTL,
+  HasPermissionsGuard,
+  JwtAuthGuard,
+  HasPermissions,
+} from "@repo/auth";
 
 @Controller("auth")
 export class AuthController {

@@ -1,3 +1,7 @@
 .git
 .turbo
 node_modules
+**/dist
+**/tsconfig.tsbuildinfo
+**/.turbo
+**/.docker

@@ -10,9 +10,7 @@ import {
 import { QuoteService } from "src/packages/quote/quote.service";
 import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
 import { CreateQuoteDto } from "src/packages/quote/dto/create-quote.dto";
-import { ReqUser } from "@repo/auth/src/decorators/req-user.decorator";
-import { UserPrincipal } from "@repo/auth/src/interfaces/user-principal.interface";
-import { JwtAuthGuard } from "@repo/auth/src/guards/jwt-auth.guard";
+import { JwtAuthGuard, ReqUser, type UserPrincipal } from "@repo/auth";
 
 @Controller("quote")
 export class QuoteController {

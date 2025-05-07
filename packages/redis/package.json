@@ -1,19 +1,11 @@
 {
   "name": "@repo/redis",
-  "type": "module",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc"
-  },
-  "exports": {
-    "./redis.module": {
-      "types": "./src/redis.module.ts",
-      "default": "./dist/redis.module.js"
-    },
-    "./redis.service": {
-      "types": "./src/redis.service.ts",
-      "default": "./dist/redis.service.js"
-    }
   },
   "dependencies": {
     "@nestjs/cache-manager": "^3.0.0",

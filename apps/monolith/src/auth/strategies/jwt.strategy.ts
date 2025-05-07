@@ -1,10 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { JwtPayload } from "@repo/auth/src/interfaces/jwt-payload.interface";
-import { UserPrincipal } from "@repo/auth/src/interfaces/user-principal.interface";
-import jwtConfig from "../../config/jwt.config";
-import { ConfigType } from "@nestjs/config";
+import { UserPrincipal, JwtPayload } from "@repo/auth";
+import jwtConfig from "src/config/jwt.config";
+import { type ConfigType } from "@nestjs/config";
 import { Request } from "express";
 
 @Injectable()

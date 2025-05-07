@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Diploma repository",
   "scripts": {
-    "dev": "turbo start:dev"
+    "dev": "turbo start:dev",
+    "dev:monolith": "turbo start:docker --filter=monolith"
   },
   "devDependencies": {
     "turbo": "^2.5.2"

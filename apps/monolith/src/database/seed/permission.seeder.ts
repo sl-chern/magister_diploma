@@ -1,7 +1,7 @@
 import { Seeder } from "typeorm-extension";
 import { DataSource } from "typeorm";
 import { PermissionEntity } from "../entity/permission.entity";
-import { permissionType } from "../../helpers/constants";
+import { permissionType } from "@repo/utilities";
 
 export default class PermissionSeeder implements Seeder {
   public async run(dataSource: DataSource): Promise<void> {

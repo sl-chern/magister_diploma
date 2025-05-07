@@ -4,7 +4,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
 import dbConfig from "src/config/database.config";
 import { DatabaseModule } from "src/database/database.module";
 import { AuthModule } from "src/auth/auth.module";
-import { RedisModule } from "@repo/redis/src/redis.module";
+import { RedisModule } from "@repo/redis";
 import { AuthModule as AuthModuleCrud } from "src/packages/auth/auth.module";
 import { QuoteModule } from "src/packages/quote/quote.module";
 import { UserModule } from "src/packages/user/user.module";

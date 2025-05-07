@@ -3,7 +3,7 @@ import { Reflector } from "@nestjs/core";
 import { Observable } from "rxjs";
 import { AuthenticatedRequest } from "../interfaces/authenticated-request.interface";
 import { HAS_PERMISSIONS_KEY } from "../helpers/auth.constants";
-import { PermissionType } from "@repo/utilities/src/constants/constants";
+import { PermissionType } from "@repo/utilities";
 
 @Injectable()
 export class HasPermissionsGuard implements CanActivate {

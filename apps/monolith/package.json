@@ -1,5 +1,5 @@
 {
-  "name": "monolit",
+  "name": "monolith",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -20,7 +20,7 @@
     "migration:revert": "npm run development typeorm -- -d ./src/config/database-migrations.config.ts migration:revert",
     "development": "dotenv-run-script .env.dev --",
     "seed": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./src/config/database-migrations.config.ts",
-    "start:docker": "docker compose --env-file ./.env.dev up -d",
+    "start:docker": "docker-compose --env-file ./.env.dev up -d",
     "stop:docker": "docker compose --env-file ./.env.dev down"
   },
   "dependencies": {
@@ -53,6 +53,7 @@
     "typeorm-extension": "^3.7.1"
   },
   "devDependencies": {
+    "@repo/typescript-config": "*",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^11.0.0",
