@@ -1,5 +1,5 @@
 import { setSeederFactory } from "typeorm-extension";
-import { TagEntity } from "../entity/tag.entity";
+import { TagEntity } from "../../entity/tag.entity";
 
 export default setSeederFactory(TagEntity, (faker) => {
   const tag = new TagEntity();

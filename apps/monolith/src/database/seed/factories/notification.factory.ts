@@ -1,5 +1,5 @@
 import { setSeederFactory } from "typeorm-extension";
-import { NotificationEntity } from "../entity/notification.entity";
+import { NotificationEntity } from "../../entity/notification.entity";
 
 export default setSeederFactory(NotificationEntity, (faker) => {
   const notification = new NotificationEntity();

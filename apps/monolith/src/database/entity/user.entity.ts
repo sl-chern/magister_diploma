@@ -67,6 +67,9 @@ export class UserEntity {
   @OneToMany(() => LikeEntity, (like) => like.quote, { cascade: true })
   likes: LikeEntity[];
 
-  @ManyToMany(() => NotificationEntity, (user) => user, { cascade: true })
+  @ManyToMany(() => NotificationEntity, (notification) => notification.users, {
+    cascade: true,
+  })
+  @JoinTable()
   notifications: NotificationEntity[];
 }

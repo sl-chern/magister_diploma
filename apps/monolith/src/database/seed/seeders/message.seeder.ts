@@ -1,7 +1,7 @@
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
 import { DataSource } from "typeorm";
-import { UserEntity } from "../entity/user.entity";
-import { MessageEntity } from "../entity/message.entity";
+import { UserEntity } from "../../entity/user.entity";
+import { MessageEntity } from "../../entity/message.entity";
 
 export default class MessageSeeder implements Seeder {
   public async run(

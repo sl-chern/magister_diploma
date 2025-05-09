@@ -1,5 +1,5 @@
 import { setSeederFactory } from "typeorm-extension";
-import { UserEntity } from "../entity/user.entity";
+import { UserEntity } from "../../entity/user.entity";
 import { Sex } from "@repo/utilities";
 import { UniqueEnforcer } from "enforce-unique";
 

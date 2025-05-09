@@ -30,8 +30,6 @@ options = Object.assign(options, {
   logging: true,
 });
 
-console.log(options);
-
 const connectionSource = new DataSource(
   options as DataSourceOptions & SeederOptions,
 );

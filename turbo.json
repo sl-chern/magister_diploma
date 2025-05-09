@@ -11,6 +11,9 @@
     "start:docker": {
       "dependsOn": ["^build"],
       "cache": false
+    },
+    "seed": {
+      "cache": false
     }
   }
 }
