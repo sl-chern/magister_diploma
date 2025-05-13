@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Diploma repository",
   "scripts": {
-    "dev": "turbo start:dev",
     "dev:monolith": "turbo start:docker --filter=monolith",
-    "seed:monolith": "turbo seed --filter=monolith"
+    "seed:monolith": "turbo seed --filter=monolith",
+    "dev:micro": "turbo start:docker --filter=microservices",
+    "seed:micro": "turbo seed --filter=microservices"
   },
   "devDependencies": {
     "turbo": "^2.5.2"

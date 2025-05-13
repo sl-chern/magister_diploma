@@ -1,0 +1,29 @@
+services:
+  user_service:
+    build:
+      context: ../../../
+      dockerfile: apps/microservices/Dockerfile.dev
+    env_file: ../.env.dev
+    volumes:
+      - ../src:/app/apps/microservices/src
+    environment:
+      - PORT=${BACKEND_PORT}
+      - SERVICE_TYPE=user
+    depends_on:
+      - db
+      - redis
+    deploy:
+      replicas: 2
+    networks:
+      - loadbalancing
+
+  user_nginx:
+    image: nginx:latest
+    volumes:
+      - ../nginx/nginx-user.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      - loadbalancing
+    depends_on:
+      - user_service 
