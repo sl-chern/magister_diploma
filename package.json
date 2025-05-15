@@ -8,7 +8,9 @@
     "dev:micro": "turbo start:docker --filter=microservices",
     "seed:micro": "turbo seed --filter=microservices",
     "dev:micro-gw": "turbo start:docker --filter=microservices-with-gateway",
-    "seed:micro-gw": "turbo seed --filter=microservices-with-gateway"
+    "seed:micro-gw": "turbo seed --filter=microservices-with-gateway",
+    "dev:micro-gw-rmq": "turbo start:docker --filter=microservices-with-gateway-and-rabbitmq",
+    "seed:micro-gw-rmq": "turbo seed --filter=microservices-with-gateway-and-rabbitmq"
   },
   "devDependencies": {
     "turbo": "^2.5.2"

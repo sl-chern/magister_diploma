@@ -1,0 +1,30 @@
+services:
+  gateway:
+    build:
+      context: ../../../
+      dockerfile: apps/microservices-with-gateway-and-rabbitmq/Dockerfile.dev
+    env_file: ../.env.dev
+    volumes:
+      - ../src:/app/apps/microservices-with-gateway-and-rabbitmq/src
+    environment:
+      - PORT=${BACKEND_PORT}
+      - SERVICE_TYPE=gateway
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+    deploy:
+      replicas: 1
+    networks:
+      - loadbalancing
+
+  gateway_nginx:
+    image: nginx:latest
+    volumes:
+      - ../nginx/nginx-gateway.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      - loadbalancing
+    depends_on:
+      - gateway 

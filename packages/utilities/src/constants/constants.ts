@@ -17,10 +17,17 @@ export const permissionType = {
 export type PermissionType =
   (typeof permissionType)[keyof typeof permissionType];
 
-export const serviceType = {
+export const controllerName = {
   user: "user",
   auth: "auth",
   quote: "quote",
   message: "message",
   notification: "notification",
+};
+
+export const serviceType = {
+  user: "user",
+  quote: "quote",
+  other: "other",
+  gateway: "gateway",
 };

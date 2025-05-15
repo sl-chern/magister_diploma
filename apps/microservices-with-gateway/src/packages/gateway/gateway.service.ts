@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { Request, Response } from "express";
 import { createProxyServer } from "http-proxy";
-import { serviceType } from "@repo/utilities";
+import { controllerName } from "@repo/utilities";
 
 const proxy = createProxyServer({});
 
@@ -9,19 +9,19 @@ const proxy = createProxyServer({});
 export class GatewayService {
   proxyRequest(req: Request, res: Response) {
     const url = req.url;
-    const controllerName = url.split("/")[3];
+    const controllerNameInUrl = url.split("/")[3];
     let target = "";
 
-    switch (controllerName) {
-      case serviceType.user:
-      case serviceType.auth:
+    switch (controllerNameInUrl) {
+      case controllerName.user:
+      case controllerName.auth:
         target = `http://${process.env.USER_SERVICE_HOST}:${process.env.SERVICE_PORT}`;
         break;
-      case serviceType.quote:
+      case controllerName.quote:
         target = `http://${process.env.QUOTE_SERVICE_HOST}:${process.env.SERVICE_PORT}`;
         break;
-      case serviceType.message:
-      case serviceType.notification:
+      case controllerName.message:
+      case controllerName.notification:
         target = `http://${process.env.OTHER_SERVICES_HOST}:${process.env.SERVICE_PORT}`;
         break;
       default:

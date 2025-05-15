@@ -8,6 +8,7 @@ import { QuoteServiceModule } from "src/quote-service.module";
 import { OtherServicesModule } from "src/other-services.module";
 import { GatewayModule } from "src/packages/gateway/gateway.module";
 import { serviceType } from "@repo/utilities";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 
 async function bootstrap() {
   configDotenv({ path: ".env.dev" });
@@ -28,9 +29,7 @@ async function bootstrap() {
     default:
       throw new Error("Uknown service type");
   }
-  const app = await NestFactory.create<NestExpressApplication>(module, {
-    bodyParser: process.env.SERVICE_TYPE !== serviceType.gateway,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(module);
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -43,5 +42,17 @@ async function bootstrap() {
   });
   app.setGlobalPrefix("api/v1");
   await app.listen(process.env.BACKEND_PORT);
+
+  if (process.env.SERVICE_TYPE !== serviceType.gateway) {
+    const microservice = app.connectMicroservice<MicroserviceOptions>({
+      transport: Transport.RMQ,
+      options: {
+        urls: [process.env.RABBITMQ_URI],
+        queue: `${process.env.SERVICE_TYPE}_queue`,
+        queueOptions: { durable: false },
+      },
+    });
+    await microservice.listen();
+  }
 }
 bootstrap();
