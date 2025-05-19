@@ -16,8 +16,6 @@ export default class NotificationSeeder implements Seeder {
 
     const notificationFactory = factoryManager.get(NotificationEntity);
 
-    console.log("fuck");
-
     for (let i = 0; i < 300; i++) {
       const shuffled = users.sort(() => 0.5 - Math.random());
       const selected = shuffled.slice(0, 25);
