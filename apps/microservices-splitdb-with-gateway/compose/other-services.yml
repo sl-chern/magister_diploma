@@ -1,0 +1,27 @@
+services:
+  other_services:
+    build:
+      context: ../../../
+      dockerfile: apps/microservices-splitdb-with-gateway/Dockerfile.dev
+    env_file: ../.env.dev
+    volumes:
+      - ../src:/app/apps/microservices-splitdb-with-gateway/src
+    environment:
+      - PORT=${BACKEND_PORT}
+      - SERVICE_TYPE=other
+    depends_on:
+      - postgres_other
+      - redis
+    deploy:
+      replicas: 1
+    networks:
+      - loadbalancing
+
+  other_nginx:
+    image: nginx:latest
+    volumes:
+      - ../nginx/nginx-other.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - loadbalancing
+    depends_on:
+      - other_services 
