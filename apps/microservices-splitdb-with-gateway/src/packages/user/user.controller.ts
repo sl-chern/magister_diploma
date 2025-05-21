@@ -11,8 +11,8 @@ export class UserController {
   }
 
   @Get()
-  async getUsers(@Query("name") name: string) {
-    return this.userService.getUsers(name);
+  async getUsers(@Query("name") name?: string, @Query("id") ids?: string[]) {
+    return this.userService.getUsers(name, ids);
   }
 
   @Get("profile/:id")

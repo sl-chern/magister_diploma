@@ -1,0 +1,18 @@
+services:
+  quote_service:
+    build:
+      context: ../../../
+      dockerfile: apps/microservices-with-gateway-and-rabbitmq/Dockerfile.dev
+    env_file: ../.env.dev
+    volumes:
+      - ../src:/app/apps/microservices-with-gateway-and-rabbitmq/src
+    environment:
+      - PORT=${BACKEND_PORT}
+      - SERVICE_TYPE=quote
+    depends_on:
+      - postgres_quote
+      - redis
+    deploy:
+      replicas: 1
+    networks:
+      - loadbalancing

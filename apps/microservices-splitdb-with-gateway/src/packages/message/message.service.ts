@@ -23,14 +23,12 @@ export class MessageService {
           recipient: getAllMessagesDto.senderId,
         },
       ],
-      relations: ["sender", "recipient"],
     });
   }
 
   async findOne(id: string) {
     return this.messageRepository.findOne({
       where: { id },
-      relations: ["sender", "recipient"],
     });
   }
 

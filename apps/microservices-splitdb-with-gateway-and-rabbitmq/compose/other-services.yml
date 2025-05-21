@@ -1,0 +1,18 @@
+services:
+  other_services:
+    build:
+      context: ../../../
+      dockerfile: apps/microservices-with-gateway-and-rabbitmq/Dockerfile.dev
+    env_file: ../.env.dev
+    volumes:
+      - ../src:/app/apps/microservices-with-gateway-and-rabbitmq/src
+    environment:
+      - PORT=${BACKEND_PORT}
+      - SERVICE_TYPE=other
+    depends_on:
+      - postgres_other
+      - redis
+    deploy:
+      replicas: 1
+    networks:
+      - loadbalancing
