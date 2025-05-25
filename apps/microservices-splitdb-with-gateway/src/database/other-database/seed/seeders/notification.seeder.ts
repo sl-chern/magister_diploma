@@ -5,6 +5,8 @@ import { UserEntity } from "../../../user-database/entity/user.entity";
 import { UserNotificationEntity } from "../../entity/user-notification.entity";
 import { RoleEntity } from "../../../user-database/entity/role.entity";
 import { PermissionEntity } from "../../../user-database/entity/permission.entity";
+import { readFileSync } from "node:fs";
+import { parse } from "csv-parse/sync";
 
 export default class NotificationSeeder implements Seeder {
   public async run(
@@ -27,6 +29,7 @@ export default class NotificationSeeder implements Seeder {
     await dataSource.query('TRUNCATE "notification" RESTART IDENTITY CASCADE;');
 
     const userRepository = userDbDataSource.getRepository(UserEntity);
+    const notificationRepository = dataSource.getRepository(NotificationEntity);
     const userNotificationRepository = dataSource.getRepository(
       UserNotificationEntity,
     );
@@ -34,7 +37,30 @@ export default class NotificationSeeder implements Seeder {
     const users = await userRepository.find();
 
     const notificationFactory = factoryManager.get(NotificationEntity);
-    const notifications = await notificationFactory.saveMany(300);
+
+    const csvContent = readFileSync("data/notification.csv", "utf-8");
+
+    const partialNotificationData = (await parse(csvContent, {
+      columns: true,
+      skip_empty_lines: true,
+    })) as {
+      notificationId: string;
+    }[];
+
+    const notificationsData: NotificationEntity[] = [];
+
+    for (const partialNotification of partialNotificationData) {
+      notificationsData.push(
+        await notificationFactory.make(
+          {
+            id: partialNotification.notificationId,
+          },
+          false,
+        ),
+      );
+    }
+
+    const notifications = await notificationRepository.save(notificationsData);
 
     const userNotifications: Partial<UserNotificationEntity>[] = [];
 

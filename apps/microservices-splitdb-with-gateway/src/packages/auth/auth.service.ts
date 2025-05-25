@@ -41,6 +41,8 @@ export class AuthService {
   }
 
   async login(loginInput: LoginDto): Promise<LoginReturnDto> {
+    console.log(loginInput);
+
     const user = (await this.userRepository.findByEmail(
       loginInput.email.toLowerCase(),
     )) as Optional<UserEntity, "password" | "is_confirmed">;

@@ -2,6 +2,8 @@ import { Seeder, SeederFactoryManager } from "typeorm-extension";
 import { DataSource } from "typeorm";
 import { UserEntity } from "../../entity/user.entity";
 import { NotificationEntity } from "../../entity/notification.entity";
+import { readFileSync } from "node:fs";
+import { parse } from "csv-parse/sync";
 
 export default class NotificationSeeder implements Seeder {
   public async run(
@@ -16,14 +18,33 @@ export default class NotificationSeeder implements Seeder {
 
     const notificationFactory = factoryManager.get(NotificationEntity);
 
-    console.log("fuck");
+    const notificationRepository = dataSource.getRepository(NotificationEntity);
 
-    for (let i = 0; i < 300; i++) {
+    const csvContent = readFileSync("data/notification.csv", "utf-8");
+
+    const partialNotificationData = (await parse(csvContent, {
+      columns: true,
+      skip_empty_lines: true,
+    })) as {
+      notificationId: string;
+    }[];
+
+    const notificationsData: NotificationEntity[] = [];
+
+    for (const partialNotification of partialNotificationData) {
       const shuffled = users.sort(() => 0.5 - Math.random());
       const selected = shuffled.slice(0, 25);
-      await notificationFactory.save({
-        users: selected,
-      });
+      notificationsData.push(
+        await notificationFactory.make(
+          {
+            id: partialNotification.notificationId,
+            users: selected,
+          },
+          false,
+        ),
+      );
     }
+
+    await notificationRepository.save(notificationsData);
   }
 }
