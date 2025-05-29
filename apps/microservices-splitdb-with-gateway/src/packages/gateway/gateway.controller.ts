@@ -19,7 +19,7 @@ import { NotificationEntity } from "src/database/other-database/entity/notificat
 
 const userServiceUrl = `http://${process.env.USER_SERVICE_HOST}:${process.env.SERVICE_PORT}/api/v1/user`;
 const otherServiceUrl = `http://${process.env.OTHER_SERVICES_HOST}:${process.env.SERVICE_PORT}/api/v1`;
-const quoteServiceUrl = `http://${process.env.QUOTE_SERVICES_HOST}:${process.env.SERVICE_PORT}/api/v1/quote`;
+const quoteServiceUrl = `http://${process.env.QUOTE_SERVICE_HOST}:${process.env.SERVICE_PORT}/api/v1/quote`;
 
 @Controller("/")
 export class GatewayController {
@@ -30,32 +30,50 @@ export class GatewayController {
     @Query("sender") senderId: string,
     @Query("reciever") recieverId: string,
   ) {
-    const senderResponse = await fetch(`${userServiceUrl}/${senderId}`);
-    const recieverResponse = await fetch(`${userServiceUrl}/${recieverId}`);
-    const messagesResponse = await fetch(
+    const senderPromise = fetch(`${userServiceUrl}/${senderId}`);
+    const recieverPromise = fetch(`${userServiceUrl}/${recieverId}`);
+    const messagesPromise = fetch(
       `${otherServiceUrl}/messages?sender=${senderId}&reciever=${recieverId}`,
     );
+
+    const responses = await Promise.all([
+      senderPromise,
+      recieverPromise,
+      messagesPromise,
+    ]);
+
     return {
-      messages: (await messagesResponse.json()) as MessageEntity[],
-      sender: (await senderResponse.json()) as UserEntity,
-      reciever: (await recieverResponse.json()) as UserEntity,
+      messages: (await responses[0].json()) as MessageEntity[],
+      sender: (await responses[1].json()) as UserEntity,
+      reciever: (await responses[2].json()) as UserEntity,
     };
   }
 
   @Get("/messages/:id")
   async getMessage(@Param("id") messageId: string) {
-    const message = (await (
-      await fetch(`${otherServiceUrl}/messages/${messageId}`)
-    ).json()) as MessageEntity;
-    const senderResponse = await fetch(`${userServiceUrl}/${message.sender}`);
-    const recieverResponse = await fetch(
-      `${userServiceUrl}/${message.recipient}`,
-    );
-    return {
-      message,
-      sender: (await senderResponse.json()) as UserEntity,
-      reciever: (await recieverResponse.json()) as UserEntity,
-    };
+    try {
+      const messageResponse = await fetch(
+        `${otherServiceUrl}/messages/${messageId}`,
+      );
+
+      if (messageResponse.status !== 500) {
+        const message = (await messageResponse.json()) as MessageEntity;
+
+        const senderPromise = fetch(`${userServiceUrl}/${message.sender}`);
+        const recieverPromise = fetch(`${userServiceUrl}/${message.recipient}`);
+
+        const responces = await Promise.all([senderPromise, recieverPromise]);
+
+        return {
+          message,
+          sender: (await responces[0].json()) as UserEntity,
+          reciever: (await responces[1].json()) as UserEntity,
+        };
+      }
+      return {};
+    } catch {
+      return {};
+    }
   }
 
   @Post("/quote")
@@ -64,6 +82,9 @@ export class GatewayController {
       await fetch(quoteServiceUrl, {
         method: "POST",
         body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
     ).json()) as QuoteEntity[];
 
@@ -72,6 +93,11 @@ export class GatewayController {
     const users = (await (
       await fetch(
         `${userServiceUrl}?${authorIds.map((id) => `id=${id}`).join("&")}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
       )
     ).json()) as UserEntity[];
 
@@ -82,31 +108,36 @@ export class GatewayController {
   }
 
   @Get("/user/profile/:id")
-  async getUserProfile(@Param() id: string) {
-    const user = (await (
-      await fetch(`${userServiceUrl}/${id}`)
-    ).json()) as UserEntity;
+  async getUserProfile(@Param("id") id: string) {
+    const userPromise = fetch(`${userServiceUrl}/${id}`);
 
     const quotesBody: GetQuotesDto = {
       limit: 20,
       offset: 0,
       authorId: id,
     };
-    const quotes = (await (
-      await fetch(quoteServiceUrl, {
-        method: "POST",
-        body: JSON.stringify(quotesBody),
-      })
-    ).json()) as QuoteEntity[];
+    const quotesPromise = fetch(quoteServiceUrl, {
+      method: "POST",
+      body: JSON.stringify(quotesBody),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    const notifications = (await (
-      await fetch(`${otherServiceUrl}/notifications/all/${id}`)
-    ).json()) as NotificationEntity;
+    const notificationsPromise = fetch(
+      `${otherServiceUrl}/notifications/all/${id}`,
+    );
+
+    const responces = await Promise.all([
+      userPromise,
+      quotesPromise,
+      notificationsPromise,
+    ]);
 
     return {
-      user,
-      quotes,
-      notifications,
+      user: (await responces[0].json()) as UserEntity,
+      quotes: (await responces[1].json()) as QuoteEntity[],
+      notifications: (await responces[2].json()) as NotificationEntity[],
     };
   }
 

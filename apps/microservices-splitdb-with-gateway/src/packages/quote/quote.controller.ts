@@ -17,7 +17,7 @@ export class QuoteController {
     return await this.quoteService.createQuote(body);
   }
 
-  @Get()
+  @Get(":quoteId")
   async getQuote(@Param("quoteId") quoteId: string) {
     return await this.quoteService.getQuotes({
       limit: 1,
@@ -26,7 +26,7 @@ export class QuoteController {
     });
   }
 
-  @Delete()
+  @Delete(":quoteId")
   async deleteQuote(@Param("quoteId") quoteId: string) {
     return await this.quoteService.deleteQuote(quoteId);
   }

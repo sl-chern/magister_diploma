@@ -55,10 +55,10 @@ export class QuoteService {
     return await this.quoteRepository.delete({ id: quoteId });
   }
 
-  async createQuote(createQuoteDto: CreateQuoteDto, user: UserPrincipal) {
+  async createQuote(createQuoteDto: CreateQuoteDto) {
     const author = await this.userRepositore.findOne({
       where: {
-        id: user.id,
+        id: createQuoteDto.userId,
       },
     });
 

@@ -21,8 +21,8 @@ export const controllerName = {
   user: "user",
   auth: "auth",
   quote: "quote",
-  message: "message",
-  notification: "notification",
+  message: "messages",
+  notification: "notifications",
 };
 
 export const serviceType = {

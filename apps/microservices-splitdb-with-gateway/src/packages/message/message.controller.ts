@@ -17,6 +17,8 @@ export class MessageController {
 
   @Post()
   async create(@Body() message: Partial<MessageEntity>) {
+    console.log(message);
+
     return this.messageService.create(message);
   }
 

@@ -9,7 +9,7 @@ const proxy = createProxyServer({});
 export class GatewayService {
   proxyRequest(req: Request, res: Response) {
     const url = req.url;
-    const controllerNameInUrl = url.split("/")[3];
+    const controllerNameInUrl = url.split("/")[3].split("?")[0];
     let target = "";
 
     switch (controllerNameInUrl) {
@@ -28,10 +28,16 @@ export class GatewayService {
         throw new BadRequestException("Gateway error");
     }
 
-    console.log(target);
-
-    proxy.web(req, res, { target, changeOrigin: true }, (error) => {
-      res.status(500).json({ error: "Gateway error", message: error.message });
-    });
+    proxy.web(
+      req,
+      res,
+      {
+        target,
+        changeOrigin: true,
+      },
+      (error) => {
+        res.status(500).json({ error, message: error.message });
+      },
+    );
   }
 }

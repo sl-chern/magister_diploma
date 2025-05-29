@@ -1,16 +1,7 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { QuoteService } from "src/packages/quote/quote.service";
 import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
 import { CreateQuoteDto } from "src/packages/quote/dto/create-quote.dto";
-import { JwtAuthGuard, ReqUser, type UserPrincipal } from "@repo/auth";
 
 @Controller("quote")
 export class QuoteController {
@@ -22,15 +13,11 @@ export class QuoteController {
   }
 
   @Post("create")
-  @UseGuards(JwtAuthGuard)
-  async createQuote(
-    @Body() body: CreateQuoteDto,
-    @ReqUser() user: UserPrincipal,
-  ) {
-    return await this.quoteService.createQuote(body, user);
+  async createQuote(@Body() body: CreateQuoteDto) {
+    return await this.quoteService.createQuote(body);
   }
 
-  @Get()
+  @Get(":quoteId")
   async getQuote(@Param("quoteId") quoteId: string) {
     return await this.quoteService.getQuotes({
       limit: 1,
@@ -39,7 +26,7 @@ export class QuoteController {
     });
   }
 
-  @Delete()
+  @Delete(":quoteId")
   async deleteQuote(@Param("quoteId") quoteId: string) {
     return await this.quoteService.deleteQuote(quoteId);
   }
