@@ -2,7 +2,6 @@ import { QuoteRepository } from "src/database/repository/quote.repository";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
 import { CreateQuoteDto } from "src/packages/quote/dto/create-quote.dto";
-import { UserPrincipal } from "@repo/auth";
 import { UserRepository } from "src/database/repository/user.repository";
 import { TagRepository } from "src/database/repository/tag.repository";
 import { In } from "typeorm";
@@ -21,7 +20,7 @@ export class QuoteService {
     const query = this.quoteRepository.createQueryBuilder("quotes");
 
     query.innerJoinAndSelect("quotes.author", "author");
-    query.innerJoinAndSelect("quotes.tags", "tags");
+    query.leftJoinAndSelect("quotes.tags", "tags");
     query.leftJoinAndSelect("quotes.repostedPost", "repostedPost");
 
     query.loadRelationCountAndMap("quotes.likes", "quotes.likes");

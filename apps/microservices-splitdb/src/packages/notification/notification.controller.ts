@@ -9,7 +9,6 @@ import {
 } from "@nestjs/common";
 import { NotificationService } from "src/packages/notification/notification.service";
 import { NotificationEntity } from "src/database/other-database/entity/notification.entity";
-import { type UserPrincipal, ReqUser } from "@repo/auth";
 
 @Controller("notifications")
 export class NotificationController {
@@ -20,9 +19,9 @@ export class NotificationController {
     return this.notificationService.create(notification);
   }
 
-  @Get()
-  async findAll(@ReqUser() user: UserPrincipal) {
-    return this.notificationService.findAll(user.id);
+  @Get("all/:id")
+  async findAll(@Param("id") id: string) {
+    return this.notificationService.findAll(id);
   }
 
   @Get(":id")

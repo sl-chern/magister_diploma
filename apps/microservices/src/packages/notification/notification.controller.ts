@@ -20,9 +20,9 @@ export class NotificationController {
     return this.notificationService.create(notification);
   }
 
-  @Get()
-  async findAll(@ReqUser() user: UserPrincipal) {
-    return this.notificationService.findAll(user.id);
+  @Get("all/:id")
+  async findAll(@Param("id") userId: string) {
+    return this.notificationService.findAll(userId);
   }
 
   @Get(":id")

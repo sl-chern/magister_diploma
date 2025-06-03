@@ -19,7 +19,19 @@ export class UserService {
     return this.userRepository.findByEmail(email);
   }
 
-  async getUsers(name: string) {
+  async getUsers(name?: string, ids?: string[]) {
+    const query = this.userRepository.createQueryBuilder("users");
+
+    query.where("1=1");
+
+    if (name) {
+      query.andWhere("users.name ILIKE :name", { name });
+    }
+
+    if (ids) {
+      query.andWhere("users.ids IN (:...ids)", { ids });
+    }
+
     return this.userRepository.find({
       where: {
         name: ILike(`%${name}%`),

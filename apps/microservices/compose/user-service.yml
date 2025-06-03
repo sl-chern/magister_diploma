@@ -13,7 +13,7 @@ services:
       - db
       - redis
     deploy:
-      replicas: 2
+      replicas: 1
     networks:
       - loadbalancing
 

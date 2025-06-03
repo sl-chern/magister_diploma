@@ -21,4 +21,5 @@ FROM node:22 as runner
 WORKDIR /app
 COPY --from=sourcer /app/ .
 WORKDIR /app/apps/monolith
+RUN npm run build
 CMD ["npm", "run", "start:dev"]

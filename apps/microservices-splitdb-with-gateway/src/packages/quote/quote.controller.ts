@@ -21,7 +21,7 @@ export class QuoteController {
   async getQuote(@Param("quoteId") quoteId: string) {
     return await this.quoteService.getQuotes({
       limit: 1,
-      offset: 1,
+      offset: 0,
       quoteId: quoteId,
     });
   }

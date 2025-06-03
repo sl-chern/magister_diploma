@@ -1,8 +1,7 @@
 import { QuoteRepository } from "src/database/quote-database/repository/quote.repository";
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
 import { CreateQuoteDto } from "src/packages/quote/dto/create-quote.dto";
-import { UserPrincipal } from "@repo/auth";
 import { TagRepository } from "src/database/quote-database/repository/tag.repository";
 import { In } from "typeorm";
 import { RepostRepository } from "src/database/quote-database/repository/repost.repository";
@@ -16,10 +15,11 @@ export class QuoteService {
   ) {}
 
   async getQuotes(getQuotesDto: GetQuotesDto) {
+    console.log(getQuotesDto);
+
     const query = this.quoteRepository.createQueryBuilder("quotes");
 
-    query.innerJoinAndSelect("quotes.author", "author");
-    query.innerJoinAndSelect("quotes.tags", "tags");
+    query.leftJoinAndSelect("quotes.tags", "tags");
     query.leftJoinAndSelect("quotes.repostedPost", "repostedPost");
 
     query.loadRelationCountAndMap("quotes.likes", "quotes.likes");
@@ -31,7 +31,7 @@ export class QuoteService {
       query.andWhere("quotes.id = :id", { id: getQuotesDto.quoteId });
 
     if (getQuotesDto.authorId)
-      query.andWhere("author.id = :authorId", {
+      query.andWhere("quotes.author = :authorId", {
         authorId: getQuotesDto.authorId,
       });
 
@@ -102,7 +102,7 @@ export class QuoteService {
       where: {
         id: quote.id,
       },
-      relations: ["author", "tags", "likes", "reposts", "repostedPost"],
+      relations: ["tags", "likes", "reposts", "repostedPost"],
     });
 
     return createdQuote;

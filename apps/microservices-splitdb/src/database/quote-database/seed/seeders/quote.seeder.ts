@@ -5,6 +5,8 @@ import { TagEntity } from "../../entity/tag.entity";
 import { UserEntity } from "../../../user-database/entity/user.entity";
 import { RoleEntity } from "../../../user-database/entity/role.entity";
 import { PermissionEntity } from "../../../user-database/entity/permission.entity";
+import { readFileSync } from "node:fs";
+import { parse } from "csv-parse/sync";
 
 export default class QuoteSeeder implements Seeder {
   public async run(
@@ -31,6 +33,7 @@ export default class QuoteSeeder implements Seeder {
     await dataSource.query('TRUNCATE "tag" RESTART IDENTITY CASCADE;');
 
     const userRepository = userDbDataSource.getRepository(UserEntity);
+    const quoteRepository = dataSource.getRepository(QuoteEntity);
 
     const tagFactory = factoryManager.get(TagEntity);
     const quoteFactory = factoryManager.get(QuoteEntity);
@@ -38,13 +41,40 @@ export default class QuoteSeeder implements Seeder {
     const users = await userRepository.find();
     const tags = await tagFactory.saveMany(500);
 
+    const quotes: QuoteEntity[] = [];
+
+    const csvContent = readFileSync("data/quote.csv", "utf-8");
+
+    const partialQuoteData = (await parse(csvContent, {
+      columns: true,
+      skip_empty_lines: true,
+    })) as {
+      quoteId: string;
+    }[];
+
+    const quoteDataIterator = partialQuoteData[Symbol.iterator]();
+
     for (const author of users) {
       const shuffled = tags.sort(() => 0.5 - Math.random());
       const selected = shuffled.slice(0, 5);
-      await quoteFactory.saveMany(100, {
-        author: author.id,
-        tags: selected,
-      });
+      for (let i = 0; i < 100; i++) {
+        quotes.push(
+          await quoteFactory.make(
+            {
+              id: quoteDataIterator.next().value.quoteId,
+              author: author.id,
+              tags: selected,
+            },
+            false,
+          ),
+        );
+      }
+    }
+
+    const chunkSize = 10000;
+    for (let i = 0; i < quotes.length; i += chunkSize) {
+      const chunk = quotes.slice(i, i + chunkSize);
+      await quoteRepository.insert(chunk);
     }
   }
 }

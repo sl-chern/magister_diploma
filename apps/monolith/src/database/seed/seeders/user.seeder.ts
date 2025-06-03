@@ -53,7 +53,7 @@ export default class UserSeeder implements Seeder {
         await userFactory.make(
           {
             id: partialUser.userId,
-            email: partialUser.userEmail,
+            email: partialUser.userEmail.toLowerCase(),
             name: partialUser.userName,
             password: await bcrypt.hash(partialUser.userPassword, 5),
             role:

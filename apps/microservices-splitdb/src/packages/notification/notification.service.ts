@@ -19,7 +19,6 @@ export class NotificationService {
           userId: userId,
         },
       },
-      relations: ["userNotifications"],
     });
   }
 

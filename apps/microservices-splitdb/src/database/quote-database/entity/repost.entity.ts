@@ -14,10 +14,14 @@ export class RepostEntity {
   })
   id: string;
 
-  @ManyToOne(() => QuoteEntity, (quote) => quote.reposts)
+  @ManyToOne(() => QuoteEntity, (quote) => quote.reposts, {
+    onDelete: "CASCADE",
+  })
   post: QuoteEntity;
 
-  @OneToOne(() => QuoteEntity, (quote) => quote.repostedPost)
+  @OneToOne(() => QuoteEntity, (quote) => quote.repostedPost, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   repostedBy: QuoteEntity[];
 }

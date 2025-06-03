@@ -12,6 +12,6 @@ export class LikeEntity {
   @ManyToOne(() => UserEntity, (user) => user.likes)
   user: UserEntity;
 
-  @ManyToOne(() => QuoteEntity, (quote) => quote.likes)
+  @ManyToOne(() => QuoteEntity, (quote) => quote.likes, { onDelete: "CASCADE" })
   quote: QuoteEntity;
 }

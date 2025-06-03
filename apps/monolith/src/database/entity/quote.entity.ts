@@ -33,12 +33,16 @@ export class QuoteEntity {
   @JoinTable()
   tags: TagEntity[];
 
-  @OneToMany(() => RepostEntity, (repost) => repost.post)
+  @OneToMany(() => RepostEntity, (repost) => repost.post, {
+    cascade: ["remove"],
+  })
   reposts: RepostEntity[];
 
-  @OneToOne(() => RepostEntity, (repost) => repost.repostedBy)
+  @OneToOne(() => RepostEntity, (repost) => repost.repostedBy, {
+    cascade: ["remove"],
+  })
   repostedPost?: RepostEntity;
 
-  @OneToMany(() => LikeEntity, (like) => like.quote, { cascade: true })
+  @OneToMany(() => LikeEntity, (like) => like.quote, { cascade: ["remove"] })
   likes: LikeEntity[];
 }

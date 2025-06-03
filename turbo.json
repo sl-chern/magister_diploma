@@ -8,6 +8,13 @@
     "start:dev": {
       "cache": false
     },
+    "start:debug": {
+      "cache": false
+    },
+    "debug:docker": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
     "start:docker": {
       "dependsOn": ["^build"],
       "cache": false

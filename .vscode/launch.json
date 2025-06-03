@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "cwd": "${workspaceFolder}",
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Docker",
+      "port": 9229,
+      "restart": true,
+      "address": "0.0.0.0",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/app",
+      "protocol": "inspector"
+    }
+  ]
+}
