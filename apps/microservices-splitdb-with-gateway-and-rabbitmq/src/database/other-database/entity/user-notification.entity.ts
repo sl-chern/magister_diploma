@@ -16,6 +16,7 @@ export class UserNotificationEntity {
   @ManyToOne(
     () => NotificationEntity,
     (notification) => notification.userNotifications,
+    { onDelete: "CASCADE" },
   )
   notification: NotificationEntity;
 }

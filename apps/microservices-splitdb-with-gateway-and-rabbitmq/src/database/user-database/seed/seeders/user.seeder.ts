@@ -1,21 +1,22 @@
-import { Seeder, SeederFactoryManager } from "typeorm-extension";
+import { Seeder } from "typeorm-extension";
 import { DataSource, DeepPartial } from "typeorm";
 import { UserEntity } from "../../entity/user.entity";
 import { RoleEntity } from "../../entity/role.entity";
 import { PermissionEntity } from "../../entity/permission.entity";
+import * as bcrypt from "bcryptjs";
+import { readFileSync } from "node:fs";
+import { parse } from "csv-parse/sync";
 
 export default class UserSeeder implements Seeder {
   public async run(
     dataSource: DataSource,
-    factoryManager: SeederFactoryManager,
+    // factoryManager: SeederFactoryManager,
   ): Promise<void> {
     await dataSource.query(
       'TRUNCATE "user_subscribers_user" RESTART IDENTITY CASCADE;',
     );
     await dataSource.query('TRUNCATE "user" RESTART IDENTITY CASCADE;');
     await dataSource.query('TRUNCATE "role" RESTART IDENTITY CASCADE;');
-
-    const userFactory = factoryManager.get(UserEntity);
 
     const roleRepository = dataSource.getRepository(RoleEntity);
     const permissionRepository = dataSource.getRepository(PermissionEntity);
@@ -26,23 +27,41 @@ export default class UserSeeder implements Seeder {
 
     const permissions = await permissionRepository.find();
 
-    await userFactory.save({
-      role: await roleRepository.findOneOrFail({
-        where: {
-          name: "admin",
-        },
-      }),
-      permissions: permissions,
-    });
+    const csvContent = readFileSync("data/user.csv", "utf-8");
 
-    const users = await userFactory.saveMany(100, {
-      role: await roleRepository.findOneOrFail({
-        where: {
-          name: "user",
-        },
-      }),
-      permissions: permissions,
+    const partialUserData = (await parse(csvContent, {
+      columns: true,
+      skip_empty_lines: true,
+    })) as {
+      userId: string;
+      userEmail: string;
+      userPassword: string;
+      userName: string;
+    }[];
+
+    const adminRole = await roleRepository.findOne({
+      where: { name: "admin" },
     });
+    const userRole = await roleRepository.findOne({ where: { name: "user" } });
+
+    const usersData: Partial<UserEntity>[] = [];
+
+    for (const partialUser of partialUserData) {
+      usersData.push({
+        name: partialUser.userName,
+        password: await bcrypt.hash(partialUser.userPassword, 5),
+        id: partialUser.userId,
+        email: partialUser.userEmail.toLowerCase(),
+        is_confirmed: true,
+        role:
+          partialUser.userId === partialUserData[0].userId
+            ? adminRole
+            : userRole,
+        permissions: permissions,
+      });
+    }
+
+    const users = await userRepository.save(usersData);
 
     for (const user of users) {
       const shuffled = users.sort(() => 0.5 - Math.random());

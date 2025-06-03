@@ -19,8 +19,8 @@ export class NotificationController {
   }
 
   @MessagePattern("findNotification")
-  async findOne(@Payload() id: string) {
-    return this.notificationService.findOne(id);
+  async findOne(@Payload() body: { id: string }) {
+    return this.notificationService.findOne(body.id);
   }
 
   @MessagePattern("updateNotification")
@@ -29,7 +29,7 @@ export class NotificationController {
   }
 
   @MessagePattern("deleteNotification")
-  async delete(@Payload() id: string) {
-    return this.notificationService.delete(id);
+  async delete(@Payload() body: { id: string }) {
+    return this.notificationService.delete(body.id);
   }
 }

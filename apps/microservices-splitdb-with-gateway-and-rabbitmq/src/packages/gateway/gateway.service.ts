@@ -2,11 +2,11 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { Request } from "express";
 import { controllerName } from "@repo/utilities";
 import { ClientProxy } from "@nestjs/microservices";
-import { UserEntity } from "dist/database/entity/user.entity";
 import { QuoteEntity } from "src/database/quote-database/entity/quote.entity";
 import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
 import { NotificationEntity } from "src/database/other-database/entity/notification.entity";
 import { MessageEntity } from "src/database/other-database/entity/message.entity";
+import { UserEntity } from "src/database/user-database/entity/user.entity";
 
 @Injectable()
 export class GatewayService {
@@ -17,25 +17,31 @@ export class GatewayService {
   ) {}
 
   async getMessages(senderId: string, recieverId: string) {
-    const sender = await this.userClient
+    const senderPromise = this.userClient
       .send<UserEntity>("getUser", senderId)
       .toPromise();
 
-    const reciever = await this.userClient
+    const recieverPromise = this.userClient
       .send<UserEntity>("getUser", recieverId)
       .toPromise();
 
-    const messages = await this.otherClient
+    const messagesPromise = this.otherClient
       .send<MessageEntity>("getMessages", {
         senderId,
         recieverId,
       })
       .toPromise();
 
+    const results = await Promise.all([
+      senderPromise,
+      recieverPromise,
+      messagesPromise,
+    ]);
+
     return {
-      sender,
-      reciever,
-      messages,
+      sender: results[0],
+      reciever: results[1],
+      messages: results[2],
     };
   }
 
@@ -44,17 +50,19 @@ export class GatewayService {
       .send<MessageEntity>("getMessage", id)
       .toPromise();
 
-    const sender = await this.userClient
+    const senderPromise = this.userClient
       .send<UserEntity>("getUser", message.sender)
       .toPromise();
 
-    const reciever = await this.userClient
+    const recieverPromise = this.userClient
       .send<UserEntity>("getUser", message.recipient)
       .toPromise();
 
+    const results = await Promise.all([senderPromise, recieverPromise]);
+
     return {
-      sender,
-      reciever,
+      sender: results[0],
+      reciever: results[1],
       message,
     };
   }
@@ -79,7 +87,7 @@ export class GatewayService {
   }
 
   async getUserProfile(id: string) {
-    const user = await this.userClient
+    const userPromise = this.userClient
       .send<UserEntity>("getProfile", id)
       .toPromise();
 
@@ -89,18 +97,24 @@ export class GatewayService {
       authorId: id,
     };
 
-    const quotes = await this.quoteClient
+    const quotesPromise = this.quoteClient
       .send<QuoteEntity[]>("getQuotes", quotesBody)
       .toPromise();
 
-    const notifications = await this.otherClient
+    const notificationsPromise = this.otherClient
       .send<NotificationEntity[]>("findNotifications", { id })
       .toPromise();
 
+    const results = await Promise.all([
+      userPromise,
+      quotesPromise,
+      notificationsPromise,
+    ]);
+
     return {
-      user,
-      quotes,
-      notifications,
+      user: results[0],
+      quotes: results[1],
+      notifications: results[2],
     };
   }
 
@@ -109,6 +123,8 @@ export class GatewayService {
     const controllerNameInUrl = url.split("/")[3];
     const messageName = url.split("/")[4];
     let targetClient: ClientProxy;
+
+    console.log(controllerNameInUrl, messageName, body);
 
     switch (controllerNameInUrl) {
       case controllerName.user:
@@ -125,6 +141,8 @@ export class GatewayService {
       default:
         throw new BadRequestException("Gateway error");
     }
+
+    console.log(targetClient);
 
     return targetClient.send(messageName, body);
   }

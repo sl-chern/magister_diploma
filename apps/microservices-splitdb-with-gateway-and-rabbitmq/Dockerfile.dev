@@ -2,7 +2,7 @@ FROM node:22 AS builder
 WORKDIR /app
 RUN npm install turbo --global 
 COPY . .
-RUN turbo prune --scope=microservices-with-gateway-and-rabbitmq --docker
+RUN turbo prune --scope=microservices-splitdb-with-gateway-and-rabbitmq --docker
 
 FROM node:22 AS installer
 WORKDIR /app
@@ -20,5 +20,5 @@ COPY .gitignore .gitignore
 FROM node:22 as runner
 WORKDIR /app
 COPY --from=sourcer /app/ .
-WORKDIR /app/apps/microservices-with-gateway-and-rabbitmq
+WORKDIR /app/apps/microservices-splitdb-with-gateway-and-rabbitmq
 CMD ["npm", "run", "start:dev"]

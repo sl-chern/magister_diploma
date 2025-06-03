@@ -1,13 +1,4 @@
-import {
-  All,
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Query,
-  Req,
-} from "@nestjs/common";
+import { All, Body, Controller, Get, Post, Req } from "@nestjs/common";
 import { Request } from "express";
 import { GatewayService } from "./gateway.service";
 import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
@@ -16,27 +7,24 @@ import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
 export class GatewayController {
   constructor(private readonly gatewayService: GatewayService) {}
 
-  @Get("/messages")
-  async getAllMessages(
-    @Query("sender") senderId: string,
-    @Query("reciever") recieverId: string,
-  ) {
-    return this.gatewayService.getMessages(senderId, recieverId);
+  @Get("/messages/getMessages")
+  async getAllMessages(@Body() body: { senderId: string; recieverId: string }) {
+    return this.gatewayService.getMessages(body.senderId, body.recieverId);
   }
 
-  @Get("/messages/:id")
-  async getMessage(@Param("id") messageId: string) {
-    return this.gatewayService.getMessage(messageId);
+  @Get("/messages/getMessage")
+  async getMessage(@Body() body: { id: string }) {
+    return this.gatewayService.getMessage(body.id);
   }
 
-  @Post("/quote")
+  @Post("/quote/getQuotes")
   async getQuotes(@Body() body: GetQuotesDto) {
     return this.gatewayService.getQuotes(body);
   }
 
-  @Get("/user/profile/:id")
-  async getUserProfile(@Param() id: string) {
-    return this.gatewayService.getUserProfile(id);
+  @Get("/user/getProfile")
+  async getUserProfile(@Body() body: { id: string }) {
+    return this.gatewayService.getUserProfile(body.id);
   }
 
   @All("*path")

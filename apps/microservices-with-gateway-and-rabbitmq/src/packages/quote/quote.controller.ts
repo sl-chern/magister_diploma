@@ -2,7 +2,6 @@ import { Controller } from "@nestjs/common";
 import { QuoteService } from "src/packages/quote/quote.service";
 import { GetQuotesDto } from "src/packages/quote/dto/get-quotes.dto";
 import { CreateQuoteDto } from "src/packages/quote/dto/create-quote.dto";
-import { type UserPrincipal } from "@repo/auth";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 
 @Controller("quote")
@@ -17,25 +16,22 @@ export class QuoteController {
   @MessagePattern("createQuote")
   async createQuote(
     @Payload()
-    body: {
-      body: CreateQuoteDto;
-      user: UserPrincipal;
-    },
+    body: CreateQuoteDto,
   ) {
-    return await this.quoteService.createQuote(body.body, body.user);
+    return await this.quoteService.createQuote(body);
   }
 
   @MessagePattern("getQuote")
-  async getQuote(@Payload() quoteId: string) {
+  async getQuote(@Payload() body: { id: string }) {
     return await this.quoteService.getQuotes({
       limit: 1,
-      offset: 1,
-      quoteId: quoteId,
+      offset: 0,
+      quoteId: body.id,
     });
   }
 
   @MessagePattern("deleteQuote")
-  async deleteQuote(@Payload() quoteId: string) {
-    return await this.quoteService.deleteQuote(quoteId);
+  async deleteQuote(@Payload() body: { id: string }) {
+    return await this.quoteService.deleteQuote(body.id);
   }
 }

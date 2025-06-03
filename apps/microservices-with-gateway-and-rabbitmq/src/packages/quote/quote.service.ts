@@ -21,7 +21,7 @@ export class QuoteService {
     const query = this.quoteRepository.createQueryBuilder("quotes");
 
     query.innerJoinAndSelect("quotes.author", "author");
-    query.innerJoinAndSelect("quotes.tags", "tags");
+    query.leftJoinAndSelect("quotes.tags", "tags");
     query.leftJoinAndSelect("quotes.repostedPost", "repostedPost");
 
     query.loadRelationCountAndMap("quotes.likes", "quotes.likes");
@@ -55,10 +55,10 @@ export class QuoteService {
     return await this.quoteRepository.delete({ id: quoteId });
   }
 
-  async createQuote(createQuoteDto: CreateQuoteDto, user: UserPrincipal) {
+  async createQuote(createQuoteDto: CreateQuoteDto) {
     const author = await this.userRepositore.findOne({
       where: {
-        id: user.id,
+        id: createQuoteDto.author,
       },
     });
 

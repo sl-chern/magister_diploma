@@ -34,17 +34,14 @@ export class UserService {
 
     query.innerJoinAndSelect("users.permissions", "permissions");
 
-    query.loadRelationCountAndMap("users.quotes", "quotes.likes");
+    query.loadRelationCountAndMap("users.quotes", "users.quotes");
     query.loadRelationCountAndMap(
       "users.sendedMessages",
-      "quotes.sendedMessages",
+      "users.sendedMessages",
     );
-    query.loadRelationCountAndMap("users.subscribers", "quotes.subscribers");
-    query.loadRelationCountAndMap("users.followings", "quotes.followings");
-    query.loadRelationCountAndMap(
-      "users.notifications",
-      "quotes.notifications",
-    );
+    query.loadRelationCountAndMap("users.subscribers", "users.subscribers");
+    query.loadRelationCountAndMap("users.following", "users.following");
+    query.loadRelationCountAndMap("users.notifications", "users.notifications");
 
     return await query.getOne();
   }

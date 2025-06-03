@@ -19,8 +19,8 @@ export class MessageController {
   }
 
   @MessagePattern("getMessage")
-  async findOne(@Payload() id: string) {
-    return this.messageService.findOne(id);
+  async findOne(@Payload() body: { id: string }) {
+    return this.messageService.findOne(body.id);
   }
 
   @MessagePattern("updateMessage")
@@ -29,7 +29,7 @@ export class MessageController {
   }
 
   @MessagePattern("deleteMessage")
-  async delete(@Payload() id: string) {
-    return this.messageService.delete(id);
+  async delete(@Payload() body: { id: string }) {
+    return this.messageService.delete(body.id);
   }
 }

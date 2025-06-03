@@ -14,6 +14,7 @@ export class NotificationEntity {
   @OneToMany(
     () => UserNotificationEntity,
     (userNotification) => userNotification.notification,
+    { cascade: ["remove"] },
   )
   userNotifications: UserNotificationEntity[];
 }

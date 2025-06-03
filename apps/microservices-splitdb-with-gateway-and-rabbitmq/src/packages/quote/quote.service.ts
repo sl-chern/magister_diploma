@@ -17,7 +17,7 @@ export class QuoteService {
   async getQuotes(getQuotesDto: GetQuotesDto) {
     const query = this.quoteRepository.createQueryBuilder("quotes");
 
-    query.innerJoinAndSelect("quotes.tags", "tags");
+    query.leftJoinAndSelect("quotes.tags", "tags");
     query.leftJoinAndSelect("quotes.repostedPost", "repostedPost");
 
     query.loadRelationCountAndMap("quotes.likes", "quotes.likes");

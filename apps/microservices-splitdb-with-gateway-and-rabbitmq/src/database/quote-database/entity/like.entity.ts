@@ -11,6 +11,8 @@ export class LikeEntity {
   @Column("uuid")
   user: string;
 
-  @ManyToOne(() => QuoteEntity, (quote) => quote.likes)
+  @ManyToOne(() => QuoteEntity, (quote) => quote.likes, {
+    onDelete: "CASCADE",
+  })
   quote: QuoteEntity;
 }

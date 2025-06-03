@@ -7,8 +7,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @MessagePattern("getUser")
-  async getUserById(@Payload() id: string) {
-    return this.userService.findById(id);
+  async getUserById(@Payload() body: { id: string }) {
+    return this.userService.findById(body.id);
   }
 
   @MessagePattern("getUsers")
@@ -17,7 +17,7 @@ export class UserController {
   }
 
   @MessagePattern("getProfile")
-  async getUserProfile(@Payload() id: string) {
-    return this.userService.getUserProfile(id);
+  async getUserProfile(@Payload() body: { id: string }) {
+    return this.userService.getUserProfile(body.id);
   }
 }
