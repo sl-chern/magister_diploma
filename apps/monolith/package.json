@@ -20,8 +20,8 @@
     "migration:revert": "npm run development typeorm -- -d ./src/config/database-migrations.config.ts migration:revert",
     "development": "dotenv-run-script .env.dev --",
     "seed": "ts-node --project tsconfig.tsnode.json ./src/database/seed/seed.ts",
-    "start:docker": "docker-compose --env-file ./.env.dev -f ./docker-compose.dev.yml up -d",
-    "debug:docker": "docker-compose --env-file ./.env.dev -f ./docker-compose.debug.yml up --build -d",
+    "start:docker": "docker compose --env-file ./.env.dev -f ./docker-compose.dev.yml up -d",
+    "debug:docker": "docker compose --env-file ./.env.dev -f ./docker-compose.debug.yml up --build -d",
     "stop:docker": "docker compose --env-file ./.env.dev -f ./docker-compose.dev.yml down"
   },
   "dependencies": {

@@ -29,10 +29,6 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     privileged: true
     network_mode: host
-    depends_on:
-      - nginx
-      - redis
-      - db
 
   grafana:
     container_name: grafana
