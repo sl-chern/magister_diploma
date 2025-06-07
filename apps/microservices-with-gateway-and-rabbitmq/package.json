@@ -20,8 +20,8 @@
     "migration:revert": "npm run development typeorm -- -d ./src/config/database-migrations.config.ts migration:revert",
     "development": "dotenv-run-script .env.dev --",
     "seed": "ts-node --project tsconfig.tsnode.json ./src/database/seed/seed.ts",
-    "start:docker": "docker-compose --env-file ./.env.dev -f ./compose/rabbitmq.yml -f ./compose/db.yml -f ./compose/user-service.yml -f ./compose/quote-service.yml -f ./compose/other-services.yml -f ./compose/gateway.yml up -d",
-    "stop:docker": "docker-compose --env-file ./.env.dev down"
+    "start:docker": "docker compose --env-file ./.env.dev -f ./compose/rabbitmq.yml -f ./compose/db.yml -f ./compose/user-service.yml -f ./compose/quote-service.yml -f ./compose/other-services.yml -f ./compose/gateway.yml up -d",
+    "stop:docker": "docker compose --env-file ./.env.dev -f ./compose/rabbitmq.yml -f ./compose/db.yml -f ./compose/user-service.yml -f ./compose/quote-service.yml -f ./compose/other-services.yml -f ./compose/gateway.yml down"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^3.0.0",

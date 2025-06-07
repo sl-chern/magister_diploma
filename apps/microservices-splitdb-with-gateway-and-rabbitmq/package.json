@@ -23,8 +23,8 @@
     "seed:quote": "ts-node --project tsconfig.tsnode.json ./src/database/quote-database/seed/seed.ts",
     "seed:other": "ts-node --project tsconfig.tsnode.json ./src/database/other-database/seed/seed.ts",
     "seed": "npm run seed:user && npm run seed:quote && npm run seed:other",
-    "start:docker": "docker-compose --env-file ./.env.dev -f ./compose/gateway.yml -f ./compose/rabbitmq.yml -f ./compose/db.yml -f ./compose/user-service.yml -f ./compose/quote-service.yml -f ./compose/other-services.yml up -d",
-    "stop:docker": "docker-compose --env-file ./.env.dev down"
+    "start:docker": "docker compose --env-file ./.env.dev -f ./compose/gateway.yml -f ./compose/rabbitmq.yml -f ./compose/db.yml -f ./compose/user-service.yml -f ./compose/quote-service.yml -f ./compose/other-services.yml up -d",
+    "stop:docker": "docker compose --env-file ./.env.dev -f ./compose/gateway.yml -f ./compose/rabbitmq.yml -f ./compose/db.yml -f ./compose/user-service.yml -f ./compose/quote-service.yml -f ./compose/other-services.yml down"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^3.0.0",
